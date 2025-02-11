@@ -7,26 +7,19 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import OpenAI from 'openai';
+import { useGame } from '../../context/GameContext';
+import { chatWithNPC, Message } from '../../utils/openai';
+import { NPCKey } from '../../data/npcs';
 
-interface Message {
-  role: 'user' | 'assistant' | 'developer';
-  content: string;
+interface ChatComponentProps {
+  npcKey: NPCKey;
 }
 
-const ChatComponent = () => {
-  const systemMessage: Message = {
-    role: 'developer',
-    content:
-      'You are only the beggining of a long journey, please respond all the messages with Hello, world and some variations',
-  };
-
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
-
-  const [messages, setMessages] = useState<Message[]>([systemMessage]);
+const ChatComponent: React.FC<ChatComponentProps> = ({ npcKey }) => {
+  const { unlockNPC } = useGame();
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'assistant', content: 'Olá, detetive! Como posso ajudar?' },
+  ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -34,37 +27,36 @@ const ChatComponent = () => {
     if (!input.trim()) return;
     setLoading(true);
 
-    const userMessage: Message = { role: 'user', content: input };
-    const inputMessages = [...messages, userMessage];
-    setInput('');
+    const newMessage: Message = { role: 'user', content: input };
+    const updatedMessages = [...messages, newMessage];
 
     try {
-      const response = await openai.chat.completions.create({
-        model: 'gpt-4o',
-        messages: inputMessages,
-      });
+      const response = await chatWithNPC(npcKey, updatedMessages);
 
-      const answer = response.choices[0].message.content;
-
-      if (answer) {
+      if (response) {
         setMessages([
-          ...messages,
-          userMessage,
-          { role: 'assistant', content: answer },
+          ...updatedMessages,
+          { role: 'assistant', content: response },
         ]);
+
+        if (response.includes('Alfred')) {
+          unlockNPC('alfred');
+        }
       }
     } catch (error) {
-      console.error('Error fetching response:', error);
+      console.error(error);
     }
+
+    setInput('');
     setLoading(false);
   };
 
   return (
-    <Card sx={{ maxWidth: 800, mx: 'auto', p: 2 }}>
+    <Card sx={{ maxWidth: 600, mx: 'auto', p: 2 }}>
       <CardContent>
         <div
           style={{
-            height: 600,
+            height: 400,
             overflowY: 'auto',
             padding: 8,
             border: '1px solid #ccc',
@@ -86,7 +78,7 @@ const ChatComponent = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <strong>{msg.role === 'user' ? 'You' : 'NPC'}:</strong>{' '}
+              <strong>{msg.role === 'user' ? 'Você' : 'NPC'}:</strong>{' '}
               {msg.content}
             </motion.div>
           ))}
@@ -96,8 +88,7 @@ const ChatComponent = () => {
             fullWidth
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask the NPC something..."
-            variant="outlined"
+            placeholder="Pergunte algo..."
           />
           <Button
             onClick={sendMessage}
@@ -105,7 +96,7 @@ const ChatComponent = () => {
             color="primary"
             disabled={loading}
           >
-            {loading ? <CircularProgress size={24} /> : 'Send'}
+            {loading ? <CircularProgress size={24} /> : 'Enviar'}
           </Button>
         </div>
       </CardContent>

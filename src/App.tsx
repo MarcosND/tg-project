@@ -1,17 +1,18 @@
 import React from 'react';
-import './App.css';
-import { BasePage } from './components';
-import { Start } from './pages';
+import { useGame } from './context/GameContext';
 
-function App() {
+import { BasePage, Chat } from './components';
+
+const App = () => {
+  const { unlockedNPCs } = useGame();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <BasePage />
-        <Start />
-      </header>
-    </div>
+    <BasePage>
+      {unlockedNPCs.map((npc) => (
+        <Chat key={npc} npcKey={npc} />
+      ))}
+    </BasePage>
   );
-}
+};
 
 export default App;
