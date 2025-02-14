@@ -1,10 +1,10 @@
-export type NPCKey = "richard" | "alfred";
+export type NPCKey = "ricardo" | "alfredo";
 
 type NPCSData = Record<NPCKey, { name: string; description: string; prompt: string }>;
 
 export const NPCS: NPCSData = {
-  richard: {
-    name: "Detetive Richard",
+  ricardo: {
+    name: "Policial Ricardo",
     description: "O detetive responsável pelo caso, mas sem pistas conclusivas.",
     prompt: `Você é o Detetive Richard, um policial experiente. 
     O caso envolve o assassinato de Victor Blackwood. 
@@ -13,8 +13,8 @@ export const NPCS: NPCSData = {
     Tente manter frases curtas e diretas, para não dar muitas dicas.
     `,
   },
-  alfred: {
-    name: "Alfred (Mordomo)",
+  alfredo: {
+    name: "Alfredo, o Mordomo",
     description: "Leal aos Blackwood, mas esconde algo sobre o crime.",
     prompt: `Você é Alfred, o mordomo da família Blackwood. 
     Você está nervoso, pois sabe que Eleanor matou Victor, mas tem medo de contar. 

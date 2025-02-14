@@ -10,7 +10,7 @@ interface GameContextType {
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
-  const [unlockedNPCs, setUnlockedNPCs] = useState<NPCKey[]>(['richard']);
+  const [unlockedNPCs, setUnlockedNPCs] = useState<NPCKey[]>(['ricardo']);
 
   const unlockNPC = (npc: NPCKey) => {
     if (!unlockedNPCs.includes(npc)) {
