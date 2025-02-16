@@ -11,7 +11,6 @@ const BasePage: React.FC<BasePageProps> = ({ children }) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      bgcolor="#121212"
       height="100vh"
     >
       <Box width="100%" margin="auto">

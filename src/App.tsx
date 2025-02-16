@@ -9,7 +9,12 @@ const App = () => {
 
   return (
     <BasePage>
-      <Stack alignItems="center" spacing={2}>
+      <Stack
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="row"
+        gap={2}
+      >
         {unlockedNPCs.map((npc) => (
           <Chat key={npc} npcKey={npc} />
         ))}

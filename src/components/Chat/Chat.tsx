@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   TextField,
   Button,
@@ -24,9 +24,9 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ npcKey }) => {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const sendMessage = async () => {
-    // Add character limit here in the future
     if (!input.trim()) return;
     setLoading(true);
 
@@ -68,9 +68,22 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ npcKey }) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <strong>{msg.role === 'user' ? 'Você' : 'NPC'}:</strong> {msg.content}
+      <strong>{msg.role === 'user' ? 'Você' : npcKey.toUpperCase()}:</strong>{' '}
+      {msg.content}
     </motion.div>
   );
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+  };
 
   return (
     <Card sx={{ maxWidth: 650, p: 2, width: '100%' }}>
@@ -86,14 +99,18 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ npcKey }) => {
           border="1px solid #ccc"
           borderRadius={2}
           gap={1.5}
+          overflow="auto"
+          id="chat-container"
         >
           {messages.map((msg, index) => renderMessage(msg, index))}
+          <div ref={messagesEndRef} />
         </Box>
         <Box display="flex" gap={2} mt={2}>
           <TextField
             fullWidth
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyUp={handleKeyPress}
             placeholder="Pergunte algo..."
           />
           <Button
