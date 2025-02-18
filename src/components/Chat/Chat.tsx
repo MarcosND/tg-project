@@ -17,11 +17,20 @@ interface ChatComponentProps {
   npcKey: NPCKey;
 }
 
+const NPCsToUnlock: NPCKey[] = ['alfredo', 'laura', 'paulo'];
+
+const getInitialMessage = (npcKey: NPCKey): Message[] => {
+  const npc = NPCS[npcKey].initialMessage;
+  if (!npc) return [];
+
+  return [{ role: 'assistant', content: npc }];
+};
+
 const ChatComponent: React.FC<ChatComponentProps> = ({ npcKey }) => {
   const { unlockNPC } = useGame();
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Olá, detetive! Como posso ajudar?' },
-  ]);
+  const [messages, setMessages] = useState<Message[]>(
+    getInitialMessage(npcKey),
+  );
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -42,9 +51,11 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ npcKey }) => {
           { role: 'assistant', content: response },
         ]);
 
-        if (response.includes('Alfredo')) {
-          unlockNPC('alfredo');
-        }
+        NPCsToUnlock.forEach((key) => {
+          if (response.toLowerCase().includes(key)) {
+            unlockNPC(key);
+          }
+        });
       }
     } catch (error) {
       console.error(error);
