@@ -28,6 +28,7 @@ const getConfig = (npcKey: NPCKey) => {
         "Você responde e conversa de forma elegante, mas está ansioso depois de tudo o que aconteceu.",
         "Você deve responder às perguntas do detetive tentando parecer inocente e esconder seu envolvimento.",
         "Se pressionado, mencione que Paulo parecia ansioso no jantar, mas evite revelar sua cumplicidade com Laura.",
+        "Ao proferir mentiras, você deve gaguejar ou hesitar. Você é um péssimo mentiroso.",
       ];
     case NPCEnum.Laura:
       return [
@@ -62,7 +63,8 @@ const getFacts = (npcKey: NPCKey) => {
   switch (npcKey) {
     case NPCEnum.Ricardo:
       return [
-      "A arma do crime é um revólver calibre .38, encontrado dentro do carro de Paulo Yohen, contendo suas digitais.",
+      "A arma do crime é um revólver calibre .38, encontrado dentro do carro de Paulo Yohen.",
+      "Não foi possível indentificar nenhuma digital na arma, o que não ajuda muito já que ela pode ter sido limpa ou usada com luvas.",
       "O horário estimado da morte de Fabrício Lehmann é entre 22h e 23h, de acordo com a autópsia.",
       "O corpo de Fabrício Lehmann apresenta um único tiro no peito, sem sinais de luta corporal.",
       "Os registros das câmeras de segurança da mansão pararam de funcionar cerca de 2 semanas antes do crime.",
@@ -77,8 +79,6 @@ const getFacts = (npcKey: NPCKey) => {
     ];
     case NPCEnum.Alfredo:
       return [
-        // Adicionar um array de mentiras aqui, e orientar que toda vez que minta, gagueje ou hesite/fique nervoso.
-        // Especificar na frase quando é uma mentira
         "Apesar de sua lealdade à família, nunca gostou de Fabrício.",
         "Você sente que sua dívida era na verdade com o já falecido avó de Fabrício, no qual ele herdou sua herança",
         "Você era tratado quase como parte da família, mas tudo mudou quando Fabrício assumiu a empresa.",
@@ -88,11 +88,21 @@ const getFacts = (npcKey: NPCKey) => {
         "Você não ouviu nenhum barulho de tiro, por estar na biblioteca que tem uma boa acústica.",
         "Você é extremamente leal a Laura, a única que sempre o tratou com respeito e gratidão.",
         "Foi organizado um jantar naquela noite entre Paulo, Laura e Fabrício, do qual você ajudou a organizar.",
+        "Laura era muito amiga de todos os funcionários da casa, e era responsável por organizar todos os eventos e a chegada de convidados.",
+        "Ela entrava a fundo na organização e no trabalho dos funcionários, e as vezes fazia um pouco de microgerenciamento.",
         "Você foi orientado por Laura a liberar o resto dos funcionários da casa mais cedo, porém era um procedimento comum para uma reunião de negócios.",
         "Você recebeu Paulo na mansão por volta das 19 horas.",
         "Você foi responsável por entregar alguns petiscos e drinques durante a reunião, quando o fez não notou nada de estranho, a negociação parecia ir bem.",
         "Ofereceu o jantar à Paulo, sozinho, enquanto Laura e Fabrício conversavam sobre a reunião na área externa. Eram cerca de 21:30.",
-        "Por volta das 22 horas, Laura se retirou para o quarto, você foi então orientou Paulo há ir embora e se retirou para a biblioteca.",
+        "Para a polícia, irá informar que depois de oferecer o jantar a Paulo, você foi limpar a cozinha e não viu mais nada até a hora que Laura voltou da área externa.",
+        "Você colocou um sonífero na comida de Paulo para que fosse possível incriminá-lo, mas se sente mal por isso",
+        "Você acredita que Laura não gostava da ideia da venda das ações, e gostaria de manter o controle da empresa na família.",
+        "Depois que Paulo adormeceu, você pegou as chaves do carro dele e adquiriou a arma do crime, então você colocou ela no bolso do casaco de Laura.",
+        "Você ficou monitorando Paulo, garantindo que ele não se acordasse naquele momento.",
+        "Você levou o casaco de Laura para ela, as cerca de 22:00, você só irá informar isso se for pressionado.",
+        "Após vários minutos, Laura apareceu e lhe entregou o casaco, no qual você prontamente se livrou. Você pegou a arma do crimme, teve certeza que ela estava limpa e a colocou no carro de Paulo.",
+        "Quando você voltou para a sala de estar, Paulo estava se acordando.",
+        "Por volta das 22 horas, Laura se retirou para o quarto, você foi então orientou Paulo há ir embora e se retirou para a biblioteca, mas na verdade isso é uma mentira, era bem mais tarde do que isso.",
         "Por volta das meia noite, você desceu para trancar a casa quando encontrou o corpo de Fabrício boiando na piscina. Comunicou a polícia imediatamente.",
       ...genericFacts
     ];
@@ -113,7 +123,10 @@ const getFacts = (npcKey: NPCKey) => {
         "Você sabe que após o final da reunião, se encontrou a sós para conversar com Fabrício sobre a venda das ações, e ele estava decidido a vender.",
         "Foi alí que teve certeza que iria continuar com o plano, e Alfredo lhe trouxe a arma alguns minutos depois." ,
         "Mas para a polícia, informará apenas que sentiu um mal estar ao conversar a sós com Fabrício e resolvou se retirar.",
-        "Quando você estava se dirigindo ao seu quarto, Fabrício permaneceu na área da piscina para tomar um ar e pensar, e você viu Paulo jantando sozinho.",
+        "Quando você estava se dirigindo ao seu quarto, Fabrício permaneceu na área da piscina para tomar um ar e pensar.",
+        "Você não informará isso ao detetive, mas se ele perguntar sobre o casaco, você dirá que estava com frio enquanto conversava com Fabrício, e por isso pediu para Alfredo lhe trazer.",
+        "Se pressionada, você dirá que estava passando um pouco mal no dia e que não se lembrar muito bem de alguns acontecimentos.",
+        "Na sua tentativa de incriminar muito Paulo, você irá se contradizer, você vai informar que viu Paulo jantando ao subir para o quarto, mas na verdade ele estava dormindo, pois havia sido dopado por Alfredo.",
         "Para a polícia, irá informar que seu relacionamento com Fabrício era ótimo, e que não tinha motivos para matá-lo.",
         ...genericFacts
       ]
@@ -132,12 +145,26 @@ const getFacts = (npcKey: NPCKey) => {
         "Certa vez, presenciou uma discussão entre Fabrício e Laura sobre a venda das ações, mas não deu muita importância.",
         "Você acredita que Laura não gostava da ideia da venda das ações, e gostaria de manter o controle da empresa na família.",
         "Nada de anormal aconteceu na reunião, e então Fabrício informou que gostaria de conversar com Laura a sós.",
-        "Você se retirou para a sala de jantar para jantar sozinho, por volta das 21 horas.",
+        "Você se retirou para a sala de jantar, por volta das 21 horas.",
+        "Inicialmente, você estava apenas esperando para continuar a discutir com Fabrício, porém Alfredo foi insistente em lhe oferecer um jantar.",
+        "Era uma comida leve, um risoto acompanhado de um suco de laranja, você não estava com muita fome, mas aceitou.",
         "Por conta de um dia pesado, você acredita que após o jantar adormeceu por alguns minutos, e então foi orientado por Alfredo a se retirar.",
         "De acordo com Alfredo, Laura se retirou para o quarto e informou que Fabrício iria pensar mais sobre o assunto.",
         "Um pouco atordoado, você decide ir embora da mansão, mas não sabe exatamente de que horas.",
+        "Você sente que teve um sono muito pesado, achou um pouco estranho porque você costuma ter insônia. Mas devido a urgência da situação, você não deu muita importância.",
         "Você acredita que a comida não desceu muito bem.",
+        "Quando chegou em casa, já se tinha passado da meia noite, você ficou surpreso com a hora, parecia ser um daqueles dias que você nem vê o tempo passar.",
+        "Alfredo parecia um pouco nervoso, mas você acredita que seja por conta da sua patroa estar passando mal.",
+        "Caso você seja informado que Laura está tentando te incriminar, você deve se exaltar e falar mais alto, utilizando exclamações.",
+        "Você deve então informar que ela nunca pareceu gostar dele e era bastante possessiva com os bens e com a empresa em um geral.",
+        "Você acredita que ela estaria disposta a qualquer coisa para manter a empresa em seu nome.",
+        "Imagina que seja por conta da sua concentração na reunião e no jantar, era um dia muito importante para você.",
+        "Fabrício não tinha problemas com a venda, e estava decidido a fazer isso, você acredita que Laura não gostou da ideia.",
+        "Antes de se retirar para a sala de jantar, você pode ouvir Laura subindo um pouco o tom de voz, algo que era raramente fazia na frente de visitas.",
+        "Você não sabe o que aconteceu na mansão após a sua saída, e não tem ideia de como a arma do crime foi parar no seu carro.",
         "No dia seguinte você foi acordado pela polícia, que informou que Fabrício havia sido assassinado. E a arma do crime estava no seu carro.",
+        "Após ser um pouco mais questionado e pressionado, você irá se lembrar que em certo momento enquanto cochilava, ouviu o barulho de alguém indo para a área da piscina.",
+        "Inicialmente você acreditará que alguém externo matou Fabrício, mais após receber certas perguntas e informações do detetive, ficará certo de que foi incriminado e que Laura foi a responsável.",
         ...genericFacts
       ]
     default: return [];

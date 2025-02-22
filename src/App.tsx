@@ -1,8 +1,8 @@
 import React from 'react';
 import { useGame } from './context/GameContext';
 
-import { BasePage, Chat } from './components';
-import { Stack } from '@mui/material';
+import { BasePage, Chat, EndButton } from './components';
+import { Box, Stack } from '@mui/material';
 
 const App = () => {
   const { unlockedNPCs } = useGame();
@@ -19,6 +19,9 @@ const App = () => {
           <Chat key={npc} npcKey={npc} />
         ))}
       </Stack>
+      <Box display="flex" justifyContent="center" mt={3}>
+        <EndButton />
+      </Box>
     </BasePage>
   );
 };
