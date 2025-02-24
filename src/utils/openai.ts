@@ -52,7 +52,7 @@ export const evaluateAnswers = async (answers: Answers, correctAnswers: Answers)
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
-        { role: "system", content: "Você é um avaliador de semelhança. Avalie as respostas do jogador comparando com as respostas corretas e atribua um score de 0 a 100. Você deve retornar apenas o score." },
+        { role: "developer", content: "Você é um avaliador de semelhança. Avalie as respostas do jogador comparando com as respostas corretas e atribua um score de 0 a 100. Você deve retornar apenas o score. Dê mais importância a semelhança de contexto e não na escrita ser completamente igual." },
         { role: "user", content: `Respostas do jogador: ${JSON.stringify(answers)}` },
         { role: "user", content: `Respostas corretas: ${JSON.stringify(correctAnswers)}` }
       ],

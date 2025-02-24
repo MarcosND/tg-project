@@ -28,7 +28,7 @@ const questions = [
   'Onde o assassinato aconteceu?',
   'Quem mais esteve diretamente envolvido no assassinato?',
   'Quem foi incriminado?',
-  'Como a arma do crime chegou nas mãos do assassino?',
+  'Como o crime foi arquitetado? (Dê a sua melhor teoria)',
 ];
 
 const correctAnswers: Answers = {
@@ -43,7 +43,7 @@ const correctAnswers: Answers = {
   'Quem mais esteve diretamente envolvido no assassinato?':
     'Alfredo, o mordomo',
   'Quem foi incriminado?': 'Paulo Yohen, o sócio',
-  'Como a arma do crime chegou nas mãos do assassino?':
+  'Como o crime foi arquitetado? (Dê a sua melhor teoria)':
     'Laura combinou com Alfredo para que ele colocasse um sonífero em seu suco, enquanto ele dormia ele pegou a chave do seu carro e pegou a arma no porta-luvas, então ele colocou a arma no bolso de um casaco de Laura e o entregou para ela durante a conversa deles na área externa',
 };
 
