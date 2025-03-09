@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { NPCKey, NPCS } from "../data/npcs";
-import { Answers } from "../components/QuizButton/QuizButton";
+import { Answers } from "../pages/MainScreen/MainScreen";
 
 export interface Message {
   role: 'user' | 'assistant' | 'developer';
