@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -8,4 +9,13 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+@keyframes highlight {
+  from {
+    background-color: #049204;
+  }
+  to {
+    background-color: #dfdadaa6;
+  }
 }

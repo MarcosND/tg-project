@@ -7,7 +7,7 @@ const genericFacts = [
   "Fabrício Lehmann era um empresário dono das ações majoritárias da empresa de tecnologia Lehmann Tech. Ele herdou a empresa de seu pai há cerca de 10 anos.",
   "A mansão da família Lehmann é uma propriedade antiga e luxuosa, localizada em uma área isolada da cidade.",
   "A família Lehmann é conhecida por sua riqueza e influência na comunidade local.",
-  "O detetive responsável pela investigação do assassinato de Fabrício Lehmann é um policial chamado Ricardo. Ele foi o primeiro a chegar na cena do crime. E levou os suspeitos para a delegacia.",
+  "Um policial chamado Ricardo foi o primeiro a chegar na cena do crime. E levou os suspeitos para a delegacia. Ele então passou a investigação para o detetive.",
 ]
 
 const getConfig = (npcKey: NPCKey) => {

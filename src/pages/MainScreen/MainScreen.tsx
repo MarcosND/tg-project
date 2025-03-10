@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react';
-import { useGame } from '../../context/GameContext';
 
-import { Chat, QuizDialog } from '../../components';
-import { Box, Button, Stack } from '@mui/material';
+import { GameBody, QuizDialog } from '../../components';
+import { Box, Button } from '@mui/material';
 import { ScreenState } from '../../App';
 import { evaluateAnswers } from '../../utils/openai';
 
@@ -32,7 +31,6 @@ const correctAnswers: Answers = {
 };
 
 const MainScreen: FC<MainScreenProps> = ({ setScreen, setScore }) => {
-  const { unlockedNPCs } = useGame();
   const [open, setOpen] = useState(false);
   const [answers, setAnswers] = useState<Answers>({});
 
@@ -54,21 +52,13 @@ const MainScreen: FC<MainScreenProps> = ({ setScreen, setScore }) => {
       display="flex"
       height="100vh"
       width="100%"
+      maxWidth={650}
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
       margin="auto"
     >
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="row"
-        gap={2}
-      >
-        {unlockedNPCs.map((npc) => (
-          <Chat key={npc} npcKey={npc} />
-        ))}
-      </Stack>
+      <GameBody />
       <Box display="flex" justifyContent="center" mt={3}>
         <Button
           variant="contained"

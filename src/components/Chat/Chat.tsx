@@ -15,22 +15,19 @@ import { NPCKey, NPCS } from '../../data/npcs';
 
 interface ChatComponentProps {
   npcKey: NPCKey;
+  messages: Message[];
+  onSendMessage: (npc: NPCKey, msg: Message) => void;
 }
 
 const NPCsToUnlock: NPCKey[] = ['alfredo', 'laura', 'paulo'];
 
-const getInitialMessage = (npcKey: NPCKey): Message[] => {
-  const npc = NPCS[npcKey].initialMessage;
-  if (!npc) return [];
-
-  return [{ role: 'assistant', content: npc }];
-};
-
-const ChatComponent: React.FC<ChatComponentProps> = ({ npcKey }) => {
+const ChatComponent: React.FC<ChatComponentProps> = ({
+  npcKey,
+  messages,
+  onSendMessage,
+}) => {
   const { unlockNPC } = useGame();
-  const [messages, setMessages] = useState<Message[]>(
-    getInitialMessage(npcKey),
-  );
+
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -41,15 +38,13 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ npcKey }) => {
 
     const newMessage: Message = { role: 'user', content: input };
     const updatedMessages = [...messages, newMessage];
+    onSendMessage(npcKey, newMessage);
 
     try {
       const response = await chatWithNPC(npcKey, updatedMessages);
 
       if (response) {
-        setMessages([
-          ...updatedMessages,
-          { role: 'assistant', content: response },
-        ]);
+        onSendMessage(npcKey, { role: 'assistant', content: response });
 
         NPCsToUnlock.forEach((key) => {
           if (response.toLowerCase().includes(key)) {
@@ -97,7 +92,9 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ npcKey }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 650, p: 2, width: '100%' }}>
+    <Card
+      sx={{ p: 2, width: '100%', borderRadius: '8px', boxSizing: 'border-box' }}
+    >
       <Typography variant="h5" pl={2}>
         {NPCS[npcKey].name}
       </Typography>
