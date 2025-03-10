@@ -11,16 +11,19 @@ interface WelcomeScreenProps {
 const WelcomeScreen: FC<WelcomeScreenProps> = ({ setScreen }) => {
   return (
     <BasePage>
-      <Typography variant="h4" gutterBottom>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ fontWeight: 500, fontFamily: 'Cinzel, sans' }}
+      >
         Assassinato na Mansão Lehmann
       </Typography>
       <Typography textAlign="justify" mb={3}>
         O corpo do empresário <b>Fabrício Lehmann</b> foi encontrado boiando na
         piscina de sua mansão. A polícia foi chamada algumas horas depois, mas o
-        culpado ainda não foi identificado.
-        <b>Três suspeitos</b> foram levados à delegacia, e <b>você</b>, como
-        detetive principal do caso, precisa interrogar cada um deles para
-        descobrir a <b>verdade</b>.
+        culpado ainda não foi identificado. <b>Três suspeitos</b> foram levados
+        à delegacia, e <b>você</b>, como detetive principal do caso, precisa
+        interrogar cada um deles para descobrir a <b>verdade</b>.
       </Typography>
       <Typography textAlign="justify">
         O policial <b>Ricardo</b>, responsável pela investigação inicial,
