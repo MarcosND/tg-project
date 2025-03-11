@@ -13,6 +13,7 @@ import { motion } from 'framer-motion';
 import { useGame } from '../../context/GameContext';
 import { chatWithNPC, Message } from '../../utils/openai';
 import { NPCKey, NPCS } from '../../data/npcs';
+import ChatHeader from '../ChatHeader/ChatHeader';
 
 interface ChatComponentProps {
   npcKey: NPCKey;
@@ -39,6 +40,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
     const newMessage: Message = { role: 'user', content: input };
     const updatedMessages = [...messages, newMessage];
     onSendMessage(npcKey, newMessage);
+    setInput('');
 
     try {
       const response = await chatWithNPC(npcKey, updatedMessages);
@@ -59,6 +61,12 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
   const renderMessage = (msg: Message, index: number) => (
     <motion.div
       key={index}
@@ -66,7 +74,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
         maxWidth: '85%',
         padding: '10px',
         borderRadius: '8px',
-        backgroundColor: msg.role === 'user' ? '#000000' : '#e0e0e0c1',
+        backgroundColor: msg.role === 'user' ? '#1b1b1b' : '#f5f5dc',
         color: msg.role === 'user' ? 'white' : 'black',
         alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
       }}
@@ -74,45 +82,31 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Typography
-        variant="body2"
-        sx={{
-          fontWeight: 'bold',
-          mb: 0.5,
-        }}
-      >
+      <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
         {msg.role === 'user' ? 'Você' : NPCS[npcKey].name}
       </Typography>
       <Typography variant="body1">{msg.content}</Typography>
     </motion.div>
   );
 
-  const renderLoading = () => {
-    return (
-      <Box
-        sx={{
-          width: '85%',
-          padding: '10px',
-          borderRadius: '8px',
-          bgcolor: '#e0e0e0c1',
-          alignSelf: 'flex-start',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 1,
-        }}
-      >
-        <Skeleton variant="text" width="25%" height={20} />
-        <Skeleton variant="text" width="85%" height={20} />
-        <Skeleton variant="text" width="70%" height={20} />
-      </Box>
-    );
-  };
-
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages]);
+  const renderLoading = () => (
+    <Box
+      sx={{
+        width: '85%',
+        padding: '10px',
+        borderRadius: '8px',
+        bgcolor: '#f5f5dc',
+        alignSelf: 'flex-start',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1,
+      }}
+    >
+      <Skeleton variant="text" width="25%" height={20} />
+      <Skeleton variant="text" width="85%" height={20} />
+      <Skeleton variant="text" width="70%" height={20} />
+    </Box>
+  );
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
@@ -123,25 +117,30 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
   return (
     <Card
       sx={{
-        p: 2,
+        p: 3,
         width: '100%',
         borderRadius: '8px',
-        boxSizing: 'border-box',
+        bgcolor: '#fdf7e3',
+        border: '2px solid #333',
+        boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.2)',
+        fontFamily: "'Courier New', monospace",
       }}
     >
-      <Typography variant="h5" pl={2}>
-        {NPCS[npcKey].name}
-      </Typography>
-      <CardContent>
+      <ChatHeader key={npcKey} npcKey={npcKey} />
+      <CardContent sx={{ p: 0, mt: 2 }}>
         <Box
           display="flex"
           flexDirection="column"
-          height="450px"
+          height={450}
           padding={2}
-          border="1px solid #ccc"
+          border="1px solid #333"
           borderRadius={2}
           gap={1.5}
           overflow="auto"
+          sx={{
+            bgcolor: '#fdf7e3',
+            boxShadow: 'inset 0 0 10px rgba(0, 0, 0, 0.1)',
+          }}
         >
           {messages.map((msg, index) => renderMessage(msg, index))}
           {loading && renderLoading()}
@@ -152,15 +151,26 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
             fullWidth
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyUp={handleKeyPress}
             placeholder="Pergunte algo..."
-            slotProps={{ input: { style: { borderRadius: '8px' } } }}
+            onKeyUp={handleKeyPress}
+            color="secondary"
+            sx={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: '8px',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': { border: '1px solid #000000' },
+              },
+            }}
+            slotProps={{
+              input: { sx: { color: '#000000' } },
+            }}
           />
           <Button
             onClick={sendMessage}
             variant="contained"
-            color="primary"
+            color="secondary"
             disabled={loading}
+            sx={{ fontFamily: "'Segoe UI', monospace", bgColor: '#000000' }}
           >
             {loading ? <CircularProgress size={24} /> : 'Enviar'}
           </Button>

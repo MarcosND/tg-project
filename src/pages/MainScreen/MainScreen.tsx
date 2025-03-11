@@ -59,15 +59,18 @@ const MainScreen: FC<MainScreenProps> = ({ setScreen, setScore }) => {
       margin="auto"
     >
       <GameBody />
-      <Box display="flex" justifyContent="center" mt={3}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setOpen(true)}
-        >
-          Resolver Mistério
-        </Button>
-      </Box>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setOpen(true)}
+        sx={{
+          borderRadius: '0 0 8px 8px',
+          alignSelf: 'flex-end',
+          bgcolor: '#186815',
+        }}
+      >
+        Resolver Mistério
+      </Button>
       <QuizDialog
         open={open}
         setOpen={setOpen}

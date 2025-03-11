@@ -5,7 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #121212;
-  background-image: url('assets/mansion-background.jpg');
+  background-image: url('../public/assets/mansion-background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

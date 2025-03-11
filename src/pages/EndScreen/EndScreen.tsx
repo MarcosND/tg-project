@@ -4,14 +4,14 @@ import { BasePage } from '../../components';
 import { Typography, Button } from '@mui/material';
 import { ScreenState } from '../../App';
 
-interface WelcomeScreenProps {
+interface EndScreenProps {
   score: number;
   setScreen: (screen: ScreenState) => void;
 }
 
 const getEndingMessage = (score: number) => {
   if (score > 65) {
-    `Você conseguiu ter um ótimo desempenho e entendimento do caso.
+    return `Você conseguiu ter um ótimo desempenho e entendimento do caso.
       Demonstrou ter ótimas habilidades de investigação e dedução.
       Parabéns!`;
   }
@@ -22,7 +22,7 @@ const getEndingMessage = (score: number) => {
   return 'Você não conseguiu desvendar muitos detalhes do caso. Não desanime, você pode tentar novamente se desejar!';
 };
 
-const MainScreen: FC<WelcomeScreenProps> = ({ setScreen, score }) => {
+const EndScreen: FC<EndScreenProps> = ({ setScreen, score }) => {
   return (
     <BasePage>
       <Typography variant="h4" gutterBottom>
@@ -47,4 +47,4 @@ const MainScreen: FC<WelcomeScreenProps> = ({ setScreen, score }) => {
   );
 };
 
-export default MainScreen;
+export default EndScreen;

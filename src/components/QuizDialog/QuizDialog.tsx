@@ -23,7 +23,7 @@ const questions = [
   'Onde o assassinato aconteceu?',
   'Quem mais esteve diretamente envolvido no assassinato?',
   'Quem foi incriminado?',
-  'Tente sua melhor teoria sobre qual foi o plano para realizar o crime',
+  'Qual foi o plano pensado para realização do crime?',
 ];
 
 const QuizDialog: React.FC<QuizDialogProps> = ({
@@ -33,9 +33,30 @@ const QuizDialog: React.FC<QuizDialogProps> = ({
   handleSubmit,
 }) => {
   return (
-    <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+    <Dialog
+      open={open}
+      onClose={() => setOpen(false)}
+      slotProps={{
+        paper: {
+          sx: {
+            backgroundImage: `linear-gradient(rgba(245, 222, 179, 0.61), rgba(245, 222, 179, 0.575)), url(/assets/paper-texture.jpg)`,
+            backgroundSize: 'cover',
+            backgroundColor: '#f5f5dc',
+            padding: '20px',
+            boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.2)',
+            border: '2px solid #3a3a3a',
+            fontFamily: "'Special Elite', 'Courier New', monospace",
+          },
+        },
+      }}
+    >
       <DialogTitle
-        style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}
+        sx={{
+          fontSize: '28px',
+          fontWeight: 'bold',
+          textAlign: 'center',
+          color: '#3a3a3a',
+        }}
       >
         Questionário de Investigação
       </DialogTitle>
@@ -44,20 +65,32 @@ const QuizDialog: React.FC<QuizDialogProps> = ({
           <TextField
             key={index}
             label={question}
-            variant="outlined"
+            variant="filled"
             fullWidth
             margin="dense"
             onChange={(e) => handleChange(question, e.target.value)}
-            style={{ marginBottom: '10px' }}
-            slotProps={{ input: { style: { borderRadius: '8px' } } }}
+            color="secondary"
+            sx={{
+              mb: 2,
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: '#fdf7e3',
+                borderRadius: '8px',
+                '& fieldset': {
+                  borderColor: '#3a3a3a',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#000000',
+              },
+            }}
           />
         ))}
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setOpen(false)} color="primary">
+        <Button onClick={() => setOpen(false)} color="secondary">
           Cancelar
         </Button>
-        <Button onClick={handleSubmit} color="primary" variant="contained">
+        <Button onClick={handleSubmit} variant="contained" color="secondary">
           Enviar Respostas
         </Button>
       </DialogActions>

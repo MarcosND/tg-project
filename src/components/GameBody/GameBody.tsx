@@ -74,9 +74,6 @@ const GameBody: FC = () => {
         sx={{
           width: '100%',
           color: '#FFFFFF',
-          '& .MuiTabs-scroller': {
-            paddingLeft: 2,
-          },
         }}
       >
         {unlockedNPCs.map((npc) => (
@@ -92,7 +89,6 @@ const GameBody: FC = () => {
           />
         ))}
       </Tabs>
-
       {unlockedNPCs.map(
         (npc) =>
           activeTab === npc && (

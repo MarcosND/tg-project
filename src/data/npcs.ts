@@ -9,39 +9,36 @@ export enum NPCEnum {
   Paulo = "paulo",
 }
 
-type NPCSData = Record<NPCKey, { name: string; prompt: string, avatar: string, occupation: string, initialMessage?: string }>;
-
-
+type NPCSData = Record<NPCKey, { name: string; prompt: string, avatar: string, occupation: string, gender: string, initialMessage?: string }>;
 
 export const NPCS: NPCSData = {
   ricardo: {
     name: "Ricardo",
-    avatar: '',
-    occupation: 'Mordomo',
-
+    avatar: '/assets/policeman.png',
+    occupation: 'Policial',
+    gender: 'Masculino',
     prompt: buildPrompt("ricardo"),
     initialMessage: 'Olá, detetive. Eu sou o Policial Ricardo e estou aqui para ajudá-lo na investigação do assassinato de Fabrício Lehmann. Como posso ajudar?',
   },
   alfredo: {
     name: "Alfredo",
-    avatar: '',
+    avatar: '/assets/steward.png',
     occupation: 'Mordomo',
+    gender: 'Masculino',
     prompt: buildPrompt("alfredo"),
   },
   laura: {
     name: "Laura Lehmann",
-    avatar: '',
-
-    occupation: 'Mordomo',
-
+    avatar: '/assets/woman.png',
+    gender: 'Feminino',
+    occupation: 'Empresária',
     prompt: buildPrompt("laura"),
   },
   paulo: {
     name: "Paulo Yohen",
-    avatar: '',
-
-    occupation: 'Mordomo',
-
+    avatar: '/assets/manager.png',
+    gender: "Masculino",
+    occupation: 'Empresário',
     prompt: buildPrompt("paulo"),
   },
 };
