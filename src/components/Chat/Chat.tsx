@@ -7,6 +7,7 @@ import {
   CircularProgress,
   Typography,
   Box,
+  Skeleton,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useGame } from '../../context/GameContext';
@@ -27,7 +28,6 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
   onSendMessage,
 }) => {
   const { unlockNPC } = useGame();
-
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -56,7 +56,6 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
       console.error(error);
     }
 
-    setInput('');
     setLoading(false);
   };
 
@@ -64,20 +63,50 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
     <motion.div
       key={index}
       style={{
-        padding: 8,
-        borderRadius: 8,
-        backgroundColor: msg.role === 'user' ? '#1976d2' : '#f0f0f0',
+        maxWidth: '85%',
+        padding: '10px',
+        borderRadius: '8px',
+        backgroundColor: msg.role === 'user' ? '#000000' : '#e0e0e0c1',
         color: msg.role === 'user' ? 'white' : 'black',
-        textAlign: msg.role === 'user' ? 'right' : 'left',
+        alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
       }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <strong>{msg.role === 'user' ? 'Você' : npcKey.toUpperCase()}:</strong>{' '}
-      {msg.content}
+      <Typography
+        variant="body2"
+        sx={{
+          fontWeight: 'bold',
+          mb: 0.5,
+        }}
+      >
+        {msg.role === 'user' ? 'Você' : NPCS[npcKey].name}
+      </Typography>
+      <Typography variant="body1">{msg.content}</Typography>
     </motion.div>
   );
+
+  const renderLoading = () => {
+    return (
+      <Box
+        sx={{
+          width: '85%',
+          padding: '10px',
+          borderRadius: '8px',
+          bgcolor: '#e0e0e0c1',
+          alignSelf: 'flex-start',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1,
+        }}
+      >
+        <Skeleton variant="text" width="25%" height={20} />
+        <Skeleton variant="text" width="85%" height={20} />
+        <Skeleton variant="text" width="70%" height={20} />
+      </Box>
+    );
+  };
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -93,7 +122,12 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
 
   return (
     <Card
-      sx={{ p: 2, width: '100%', borderRadius: '8px', boxSizing: 'border-box' }}
+      sx={{
+        p: 2,
+        width: '100%',
+        borderRadius: '8px',
+        boxSizing: 'border-box',
+      }}
     >
       <Typography variant="h5" pl={2}>
         {NPCS[npcKey].name}
@@ -102,15 +136,15 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
         <Box
           display="flex"
           flexDirection="column"
-          height="400px"
-          p={1}
+          height="450px"
+          padding={2}
           border="1px solid #ccc"
           borderRadius={2}
           gap={1.5}
           overflow="auto"
-          id="chat-container"
         >
           {messages.map((msg, index) => renderMessage(msg, index))}
+          {loading && renderLoading()}
           <div ref={messagesEndRef} />
         </Box>
         <Box display="flex" gap={2} mt={2}>
@@ -120,6 +154,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
             onChange={(e) => setInput(e.target.value)}
             onKeyUp={handleKeyPress}
             placeholder="Pergunte algo..."
+            slotProps={{ input: { style: { borderRadius: '8px' } } }}
           />
           <Button
             onClick={sendMessage}

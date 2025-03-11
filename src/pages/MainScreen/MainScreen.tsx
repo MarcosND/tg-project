@@ -52,7 +52,7 @@ const MainScreen: FC<MainScreenProps> = ({ setScreen, setScore }) => {
       display="flex"
       height="100vh"
       width="100%"
-      maxWidth={650}
+      maxWidth={700}
       alignItems="center"
       justifyContent="center"
       flexDirection="column"

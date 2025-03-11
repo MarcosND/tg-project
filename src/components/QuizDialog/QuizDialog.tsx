@@ -49,6 +49,7 @@ const QuizDialog: React.FC<QuizDialogProps> = ({
             margin="dense"
             onChange={(e) => handleChange(question, e.target.value)}
             style={{ marginBottom: '10px' }}
+            slotProps={{ input: { style: { borderRadius: '8px' } } }}
           />
         ))}
       </DialogContent>

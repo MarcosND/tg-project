@@ -30,6 +30,19 @@ const theme = createTheme({
           },
         }
       }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px',
+
+        },
+      },
+    },
+  },
+  palette: {
+    primary: {
+      main: '#255dd6',
     }
   }
 });
