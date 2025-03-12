@@ -10,24 +10,15 @@ import {
 
 interface QuizDialogProps {
   open: boolean;
+  questions: string[];
   setOpen: (open: boolean) => void;
   handleChange: (question: string, value: string) => void;
   handleSubmit: () => void;
 }
 
-const questions = [
-  'Quem assassinou Fabrício Lehmann?',
-  'Qual foi a arma utilizada e onde foi encontrada?',
-  'Qual foi a motivação para o crime?',
-  'Qual o horário aproximado do assassinato?',
-  'Onde o assassinato aconteceu?',
-  'Quem mais esteve diretamente envolvido no assassinato?',
-  'Quem foi incriminado?',
-  'Qual foi o plano pensado para realização do crime?',
-];
-
 const QuizDialog: React.FC<QuizDialogProps> = ({
   open,
+  questions,
   setOpen,
   handleChange,
   handleSubmit,

@@ -32,7 +32,7 @@ const WelcomeScreen: FC<WelcomeScreenProps> = ({ setScreen }) => {
       </Typography>
       <Button
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={() => setScreen(ScreenState.GAME)}
         style={{ marginTop: 20 }}
       >

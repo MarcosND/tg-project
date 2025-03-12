@@ -33,11 +33,20 @@ const EndScreen: FC<EndScreenProps> = ({ setScreen, score }) => {
       </Typography>
       <Typography>
         Muito obrigado por jogar! Se quiser, você pode tentar jogar novamente
-        clicando no botão abaixo.
+        clicando no botão abaixo. Se não, por favor, deixe a sua avaliação
+        através desse{' '}
+        <a
+          href="https://www.google.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          formulário
+        </a>
+        .
       </Typography>
       <Button
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={() => setScreen(ScreenState.GAME)}
         style={{ marginTop: 20 }}
       >
