@@ -66,7 +66,9 @@ const MainScreen: FC<MainScreenProps> = ({ setScreen, setScore }) => {
         sx={{
           borderRadius: '0 0 8px 8px',
           alignSelf: 'flex-end',
-          bgcolor: '#186815',
+          bgcolor: '#247e22',
+          height: 40,
+          '&:hover': { bgcolor: '#1e5f17' },
         }}
       >
         Resolver Mistério

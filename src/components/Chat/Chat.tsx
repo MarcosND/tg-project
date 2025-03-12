@@ -74,7 +74,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
         maxWidth: '85%',
         padding: '10px',
         borderRadius: '8px',
-        backgroundColor: msg.role === 'user' ? '#1b1b1b' : '#f5f5dc',
+        backgroundColor: msg.role === 'user' ? '#1b1b1b' : '#f0f0cd',
         color: msg.role === 'user' ? 'white' : 'black',
         alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
       }}
@@ -95,7 +95,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
         width: '85%',
         padding: '10px',
         borderRadius: '8px',
-        bgcolor: '#f5f5dc',
+        bgcolor: '#f0f0cd',
         alignSelf: 'flex-start',
         display: 'flex',
         flexDirection: 'column',
