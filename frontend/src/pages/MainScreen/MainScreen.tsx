@@ -1,9 +1,11 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { GameBody, QuizDialog } from '../../components';
 import { Box, Button } from '@mui/material';
 import { ScreenState } from '../../App';
-import { Answers, evaluateAnswers, questionsData } from '../../utils/openai';
+import { Answers, questions } from '../../utils/openai';
+import { evaluateAnswers, startGame } from '../../api/api';
+import { useGame } from '../../context/GameContext';
 
 interface MainScreenProps {
   setScreen: (screen: ScreenState) => void;
@@ -13,18 +15,36 @@ interface MainScreenProps {
 const MainScreen: FC<MainScreenProps> = ({ setScreen, setScore }) => {
   const [open, setOpen] = useState(false);
   const [answers, setAnswers] = useState<Answers>({});
+  const { sessionId, setSessionId } = useGame();
+
+  useEffect(() => {
+    const initializeGame = async () => {
+      try {
+        const data = await startGame();
+        setSessionId(data.sessionId);
+      } catch (error) {
+        console.error('Error starting game:', error);
+      }
+    };
+
+    if (!sessionId) {
+      initializeGame();
+    }
+  }, []);
 
   const handleChange = (question: string, value: string) => {
     setAnswers((prev) => ({ ...prev, [question]: value }));
   };
 
   const handleSubmit = async () => {
-    console.log('Respostas enviadas: ', answers);
-    const result = await evaluateAnswers(answers, questionsData);
-    console.log('Seu score foi: ', result);
+    if (!sessionId) throw new Error('Session ID not found');
+
+    const result = await evaluateAnswers(sessionId, answers);
+
+    setSessionId(null);
     setOpen(false);
     setScreen(ScreenState.END);
-    setScore(Number(result));
+    setScore(result);
   };
 
   return (
@@ -55,7 +75,7 @@ const MainScreen: FC<MainScreenProps> = ({ setScreen, setScore }) => {
       </Button>
       <QuizDialog
         open={open}
-        questions={Object.keys(questionsData)}
+        questions={questions}
         setOpen={setOpen}
         handleChange={handleChange}
         handleSubmit={handleSubmit}

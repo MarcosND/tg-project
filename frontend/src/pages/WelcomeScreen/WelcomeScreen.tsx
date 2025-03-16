@@ -1,14 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { Button, Typography } from '@mui/material';
 import { ScreenState } from '../../App';
 import { BasePage } from '../../components';
+import { useGame } from '../../context/GameContext';
 
 interface WelcomeScreenProps {
   setScreen: (screen: ScreenState) => void;
 }
 
 const WelcomeScreen: FC<WelcomeScreenProps> = ({ setScreen }) => {
+  const { setSessionId } = useGame();
+  useEffect(() => {
+    setSessionId(null);
+  }, []);
+
   return (
     <BasePage>
       <Typography

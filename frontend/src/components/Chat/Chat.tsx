@@ -11,9 +11,10 @@ import {
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useGame } from '../../context/GameContext';
-import { chatWithNPC, Message } from '../../utils/openai';
+import { Message } from '../../utils/openai';
 import { NPCKey, NPCS } from '../../data/npcs';
 import ChatHeader from '../ChatHeader/ChatHeader';
+import { chatWithNPC } from '../../api/api';
 
 interface ChatComponentProps {
   npcKey: NPCKey;
@@ -28,7 +29,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
   messages,
   onSendMessage,
 }) => {
-  const { unlockNPC } = useGame();
+  const { unlockNPC, sessionId } = useGame();
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -43,7 +44,9 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
     setInput('');
 
     try {
-      const response = await chatWithNPC(npcKey, updatedMessages);
+      if (!sessionId) throw new Error('Session ID not found');
+
+      const response = await chatWithNPC(sessionId, npcKey, updatedMessages);
 
       if (response) {
         onSendMessage(npcKey, { role: 'assistant', content: response });

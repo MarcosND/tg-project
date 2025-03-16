@@ -10,8 +10,8 @@ const theme = createTheme({
         root: {
           '& button': {
             color: '#FFFFFF',
-            minHeight: 24,
-            height: 24,
+            minHeight: 25,
+            height: 25,
             borderRadius: '8px 8px 0 0',
             backgroundColor: '#dfdadaa6',
             alignSelf: 'flex-end',
