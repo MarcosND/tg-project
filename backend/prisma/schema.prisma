@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model GameSession {
+  id              String  @id @default(uuid())
+  questionsAsked  Int
+  startTime       DateTime
+  endTime         DateTime?
+  duration        Int    @default(0)
+  score           Int    @default(0)
+
+  questionsPerCharacter QuestionsPerCharacter?
+}
+
+model QuestionsPerCharacter {
+  id        String @id @default(uuid())
+  gameId    String @unique
+  game      GameSession @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  
+  ricardo   Int  @default(0)
+  alfredo   Int  @default(0)
+  laura     Int  @default(0)
+  paulo     Int  @default(0)
+}

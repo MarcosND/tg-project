@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "5432:5432"
+  server:
+    build: .
+    volumes:
+      - .:/app
+    env_file: .env
+    command: yarn start
+    environment:
+      DATABASE_URL: "postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}?schema=public"
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    depends_on:
+      - db
