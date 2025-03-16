@@ -11,6 +11,10 @@ app.use(express.json());
 app.use(cors());
 app.use('/api', routes)
 
+app.get('/', (_req: Request, res: Response) => {
+  res.send('Server is running');
+});
+
 app.listen(port, () => 
   console.log(`Server is running on http://localhost:${port}`)
 );
