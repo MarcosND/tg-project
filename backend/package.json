@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/index.ts",
-    "postinstall": "prisma migrate deploy"
+    "start": "nodemon src/index.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",

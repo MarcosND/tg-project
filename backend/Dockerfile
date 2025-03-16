@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD npx prisma generate && yarn start
+CMD npx prisma generate && npx prisma migrate deploy && yarn start
