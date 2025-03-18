@@ -36,7 +36,7 @@ const EndScreen: FC<EndScreenProps> = ({ setScreen, score }) => {
         clicando no botão abaixo. Se não, por favor, deixe a sua avaliação
         através desse{' '}
         <a
-          href="https://www.google.com"
+          href="https://forms.gle/WudaYrHdpKesyPWz7"
           target="_blank"
           rel="noopener noreferrer"
         >

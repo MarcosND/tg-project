@@ -44,9 +44,8 @@ export const configContent = [
 ]
 
 export const evaluatorConfig = [
-  "Você é um avaliador de semelhança. Avalie as respostas do jogador comparando com as respostas corretas e atribua um score de 0 a 100.",
-  "Você deve retornar apenas o score. Dê mais importância a semelhança de contexto e não na escrita ser completamente igual.",
-  "Se tiverem respostas faltantes, pontue proporcionalmente com a quantidade de perguntas total ainda considerando a sua semelhança com as respostas corretas.",
+  "Você é um avaliador de respostas que compara as respostas do jogador com as respostas corretas.",
+  "Você deve retornar apenas um número que representa o score de 0 a 100. Dê mais importância a semelhança de contexto e não na escrita ser completamente igual.",
 ]
 
 export const configPrompt: Message = {
